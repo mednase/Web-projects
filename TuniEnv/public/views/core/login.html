@@ -1,0 +1,52 @@
+<div class="auth-main">
+    <div class="auth-block animated fadeInDown">
+        <div><h1>Sign in to your account</h1></div>
+        <form name="form" role="form" class="form-horizontal" ng-submit="doLogin()">
+            <div class="form-group">
+                <label for="username" class="col-sm-2 control-label">Username</label>
+
+                <div class="col-sm-10 inner-addon right-addon">
+                    <i class="glyphicon glyphicon-user"></i>
+                    <input type="text" id="username" class="form-control" ng-model="login.username" placeholder="Username" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10 inner-addon right-addon">
+                    <i class="glyphicon glyphicon-lock"></i>
+                    <input type="password" ng-model="login.password" class="form-control" id="password" placeholder="Password" required>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-5">
+                    <button type="submit" ng-disabled="form.$invalid" class="btn btn-default btn-auth">Sign in</button>
+                </div>
+                <loading ng-show="loading"></loading>
+                <div  class="pull-right" style="margin-top: 5px;font-size: 15px">
+                    <a href="/register">Sign up |</a>
+                    <a href="/forget" >Forgot password ?</a>
+                </div>
+            </div>
+
+        </form>
+        <div class="auth-sep"><span><span>or Sign in with one click</span></span></div>
+
+        <div class="al-share-auth">
+            <ul class="al-share clearfix">
+                <li><a ui-sref="authFacebook"><i class="socicon socicon-facebook" title="Log in with Facebook"></i></a></li>
+                <li><a ui-sref="authTwitter"><i class="socicon socicon-twitter" title="Log in with Twitter"></i></a></li>
+                <li><a ui-sref="authGoogle" href="/api/auth/googlePlus"><i class="socicon socicon-google" title="Log in with Google Plus"></i></a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+

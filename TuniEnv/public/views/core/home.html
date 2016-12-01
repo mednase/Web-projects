@@ -1,0 +1,59 @@
+<div class="page-content" style="min-height: 800px">
+    <div style="position: relative;">
+        <input style="color:white;background: rgba(0, 0, 0, .15);" autofocus type="text" class="form-control"
+               ng-model="search" placeholder="Searching  For ....">
+    </div>
+    <div class="indicator" ng-show="indicator">
+        {{indicator}}
+    </div>
+    <div class="panel panel-default row col-lg-12" style="margin-top: 20px;">
+        <div ng-repeat="article in articles | filter: search track by $index" class="col-md-6 col-sm-10 col-xs-10 col-lg-4" style="margin-top: 5px;padding: 4px;">
+            <div class="post-item  animated zoomIn">
+
+                <div class="article-heading">
+                    <img ng-src="{{ article.author.avatar || 'public/assets/img/no-photo.png' }}"> <a
+                        ui-sref="user_profile({username:article.author.username})"><strong>{{article.author.username |limitTo:18}}</strong></a>
+                    posted a new article
+                </div>
+                <div class="article-boy">
+                    <div>
+                        <img src="{{article.images[0]}}" width="150" height="150" class="img-text" align="left">
+                        <h5 style="cursor:pointer;color: greenyellow" ui-sref="show_article({article_id:article._id})">
+                            {{article.title | limitTo:25}} <span ng-show="article.title.length>20">..</span></h5>
+                        <p>{{article.description | limitTo: 400 }}{{article.description.length > 400 ? '...' : ''}}</p>
+                    </div>
+                </div>
+                <div class="article-footer">
+                    <div class="post-row">
+                        <div class="post-info">
+                            <span style="color: dodgerblue;" class="glyphicon glyphicon-thumbs-up"> {{article.likes.length}}</span>
+                            <span style="color:indianred;" class="glyphicon glyphicon-thumbs-down"> {{article.dislikes.length}}</span>
+                            <span style="color:#02cd93;" class="disqus-comment-count"
+                                  data-disqus-identifier="{{article._id}}"> </span>
+                            <span class="text-right fa fa-eye"> {{article.views}}</span>
+
+                        </div>
+                        <button ui-sref="show_article({article_id:article._id})" style="color: #1caf9a;font-size: 13px;"
+                                class="btn btn-default btn-rounded pull-right">Read more →
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div style="margin-bottom: 50px;margin-top: 50px" class="col-md-12 text-center">
+            <ul template-url="custom-pagination.html" uib-pagination total-items="totalArticles" ng-model="currentPage" max-size="5" ui-class="c-pagination"
+                boundary-link-numbers="true" rotate="false" ng-change="pageChanged()"></ul>
+        </div>
+    </div>
+
+</div>
+<script id="dsq-count-scr" src="//tuni-env.disqus.com/count.js" async></script>
+<script id="custom-pagination.html" type="text/ng-template">
+                <li ng-if="boundaryLinks" class="pagination-first"><a href  ng-class="{disabled: noPrevious()||ngDisabled}" ng-click="selectPage(1, $event)" ng-disabled="noPrevious()||ngDisabled" uib-tabindex-toggle>{{getText('first')}}</a></li>
+                <li ng-if="directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="pagination-prev "><a ng-class="{disabled: noPrevious()||ngDisabled}" href ng-click="selectPage(page - 1, $event)" ng-disabled="noPrevious()||ngDisabled" class='prev'  uib-tabindex-toggle><i class='fa fa-chevron-left' ></i>{{getText('previous')}}</a></li>
+                <li ng-repeat="page in pages track by $index" ng-class="{active: page.active,disabled: ngDisabled&&!page.active}" class="pagination-page"><a ng-class='page.active?"active":""' href ng-click="selectPage(page.number, $event)" ng-disabled="ngDisabled&&!page.active" uib-tabindex-toggle>{{page.text}}</a></li>
+                <li ng-if="directionLinks" ng-class="{disabled: noNext()||ngDisabled}" class="pagination-next"><a ng-class="{disabled: noNext()||ngDisabled}" href ng-click="selectPage(page + 1, $event)" ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle class='next'>{{getText('next')}}<i class='fa fa-chevron-right'></i></a></li>
+                <li ng-if="boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}" class="pagination-last"><a ng-class="{disabled: noNext()||ngDisabled}" href ng-click="selectPage(totalPages, $event)" ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle>{{getText('last')}}</a></li>
+</script>

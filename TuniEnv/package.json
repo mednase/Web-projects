@@ -1,0 +1,54 @@
+{
+  "name": "TuniEnv",
+  "version": "0.0.1",
+  "engines": {
+    "node": "2.15.8"
+  },
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-toastr": "^2.1.1",
+    "angular-ui-bootstrap": "^2.2.0",
+    "angular-ui-router": "^0.3.1",
+    "async": "^2.0.1",
+    "bcryptjs": "*",
+    "body-parser": "^1.15.2",
+    "bootstrap": "^3.3.7",
+    "cloudinary": "^1.4.4",
+    "connect-flash": "*",
+    "cookie-parser": "^1.4.1",
+    "datauri": "^1.0.4",
+    "dropzone": "^4.3.0",
+    "express": "^4.14.0",
+    "express-session": "*",
+    "express-validator": "^2.20.10",
+    "hogan": "^1.0.2",
+    "jwt-simple": "^0.5.0",
+    "mongoose": "^4.6.1",
+    "morgan": "^1.7.0",
+    "multer": "^1.2.0",
+    "ng-file-upload": "^12.2.12",
+    "ngdropzone": "^2.0.1",
+    "ngmap": "^1.17.7",
+    "passport": "*",
+    "passport-facebook": "^2.1.1",
+    "passport-google-oauth2": "^0.1.6",
+    "passport-google-plus": "^0.5.1",
+    "passport-http": "*",
+    "passport-jwt": "^2.1.0",
+    "passport-twitter": "^1.0.4",
+    "sendgrid": "^4.5.0",
+    "sendgrid-rest": "^2.2.2",
+    "socket.io": "^1.5.1",
+    "socket.io-client": "^1.5.1"
+  },
+  "author": "Mednaceur",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-angular-gettext": "^2.2.0"
+  }
+}

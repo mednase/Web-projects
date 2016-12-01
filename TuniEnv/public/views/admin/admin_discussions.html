@@ -1,0 +1,35 @@
+<div class="content-frame">
+    <!-- START CONTENT FRAME TOP -->
+    <div class="content-frame-top">
+        <div class="page-title">
+            <h2><span class="fa fa-comments"></span> Messages </h2>
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-danger"><span class="fa fa-book"></span> Contacts</button>
+            <button class="btn btn-default content-frame-right-toggle"><span class="fa fa-bars"></span></button>
+        </div>
+    </div>
+    <!-- END CONTENT FRAME TOP -->
+
+    <!-- START CONTENT FRAME RIGHT -->
+    <div class="content-frame-body  " style="margin-right: 10%;margin-left: 2%;margin-top: 5px;height: auto">
+
+        <div class="list-group list-group-contacts border-bottom push-down-10">
+            <a ui-sref="admin.discussion_room({channel:discussion._id})" ng-class="discussions.messages.last().seen?'':'unseen'" href="#" class="list-group-item" ng-repeat="discussion in discussions track by $index"
+            style="margin-top: 5px">
+                <div class="list-group-status status-online"></div>
+                <img ng-src="{{discussion.users.last().avatar || '/public/assets/img/no-photo.png'}}"  class="pull-left">
+                <span class="contacts-title" ng-if="discussion.messages.last().from.username==user.username">You :</span>
+                <span class="contacts-title" ng-if="discussion.messages.last().from.username!=user.username">{{discussion.messages.last().from.username}} :</span>
+                <p>{{discussion.messages.last().body}}</p>
+            </a>
+        </div>
+
+        <div class=" col-md-8 text-right" style="float: right;">
+            <ul uib-pagination total-items="totalDiscussions" ng-model="currentPage" max-size="5"
+                boundary-link-numbers="true" rotate="false" ui-class="pagination" ng-change="pageChanged()"></ul>
+        </div>
+    </div>
+
+    <!-- END CONTENT FRAME RIGHT -->
+</div>

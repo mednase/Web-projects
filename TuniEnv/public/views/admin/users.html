@@ -1,0 +1,85 @@
+<div class="page-title">
+    <h2><span class="fa fa-users"></span> Users accounts <small>{{totalUsers}} accounts</small></h2>
+</div>
+<div class="page-content-wrap">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p >Use search to find account. You can search by: username, email, or phone.</p>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="input-group" >
+                                <div class="input-group-addon" style="color: whitesmoke">
+                                    <span style="margin-bottom: 12px;" class="fa fa-search"></span>
+                                </div>
+                                <input  ng-class="{'success':(users|account:searchAccount)>-1,
+                                'error':(users|account:searchAccount)<0 && searchAccount.length>0}" ng-model="searchAccount" type="text" class="form-control " placeholder="Who are you looking for? ">
+                                <div class="input-group-btn" >
+                                    <button style="padding: 8px;" class="btn btn-primary ">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6  col-sm-6 form-group row">
+                            <div class="col-md-7 col-sm-7 col-xs-5 col-lg-6 " >
+                            <button ng-click="promoteUser()" ng-disabled="foundAccount.promote==null" class="btn btn-success">Change Account Type To : </button>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-lg-5 col-xs-4 col-md-offset-1 col-xs-offset-1 col-sm-offset-1" >
+                                <select ng-if="((users|account:searchAccount)>-1) && (foundAccount=users[(users|account:searchAccount)])" class="form-control "
+                                        ng-model="foundAccount.promote">
+                                    <option value="" disabled selected>Account Type</option>
+                                    <option ng-if="users[(users|account:searchAccount)].role!=role" ng-repeat="role in ['user','admin','super-admin']" value="{{role}}">{{role}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-3" ng-repeat="usr in users | filter:searchAccount track by $index">
+        <!-- CONTACT ITEM -->
+        <div class="panel panel-default " >
+
+            <div class="panel-body profile">
+                <div class="profile-image">
+                    <img src="{{ usr.avatar || 'public/assets/img/no-image.jpg'}}" alt="{{usr.firstname+' '+usr.lastname}}">
+                </div>
+                <div class="profile-data">
+                    <div class="profile-data-name">{{usr.username}}</div>
+                    <div class="profile-data-title">{{usr.firstname+' '+usr.lastname}}</div>
+                </div>
+                <div class="profile-controls">
+                    <a href="#" class="profile-control-left"><span class="fa fa-info"></span></a>
+                    <a ng-show="usr.phone" href="#" class="profile-control-right"><span class="fa fa-phone"></span></a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="admin-contact-info">
+                    <p><small style="margin-right: 5px" class="label label-info">Role</small>{{usr.role}}</p>
+                    <p><small>Mobile : </small>{{usr.phone}}</p>
+                    <p><small>Email :</small>{{usr.email}}</p>
+                    <p><small>Last Login :</small>{{usr.lastLogin | date: 'dd-MMM-yyyy @ hh:mm'}}</p>
+                    <p><small>Date Join : </small>{{usr.dateJoin | date: 'dd-MMM-yyyy'}}</p>
+                </div>
+            </div>
+            <div class="text-center" ng-show="user.username!=usr.username">
+                <button ng-show="usr.enable" class="btn btn-danger animated zoomIn" ng-click="banUser(usr)">
+                    Ban Account
+                </button>
+                <button ng-hide="usr.enable" class="btn btn-success animated zoomIn" ng-click="activateUser(usr)">
+                    Activate Account
+                </button>
+
+            </div>
+        </div>
+        <!-- END CONTACT ITEM -->
+    </div>
+    <div class=" col-md-8 text-right" style="float: right;">
+        <ul uib-pagination total-items="totalUsers" ng-model="currentPage" max-size="5"
+            boundary-link-numbers="true" rotate="false" ui-class="pagination" ng-change="pageChanged()"></ul>
+    </div>
+</div>
+

@@ -1,0 +1,72 @@
+<div class="page-title">
+    <h2><span class="fa fa-file-text"></span> Articles
+        <small>{{totalArticles}} articles</small>
+    </h2>
+</div>
+
+<div class="page-content-wrap" id="ListArticle">
+    <div class="row">
+        <div class="col-md-12">
+
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading ui-draggable-handle">
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                        <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                    </ul>
+                </div>
+                <div class="panel-body" >
+                    <div class="dataTables_wrapper no-footer row">
+                        <div class=" col-md-6" style="top: -8px;">
+                                <input ng-model="searchArticle" type="search" class="form-control col-md-2"
+                                                 placeholder="search for an article">
+                        </div>
+                        <table class="table  no-footer" style="margin-top: -14px;" >
+                            <thead>
+                            <tr >
+                                <th  tabindex="0"  rowspan="1" colspan="1" class="col-md-2">Title
+                                </th>
+                                <th  tabindex="0" rowspan="1" colspan="1" class="col-md-2">Author
+                                </th>
+                                <th  tabindex="0"  rowspan="1" colspan="1" class="col-md-1">Governorate
+                                </th>
+                                <th  tabindex="0"  rowspan="1" colspan="1" class="col-md-1">Date Creation
+                                </th>
+                                <th tabindex="0" rowspan="1" colspan="1" class="col-md-1">Views
+                                </th>
+                                <th class=" text-center col-md-1" tabindex="0" rowspan="1" colspan="1">Action
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="article in articles| filter: searchArticle track by $index" role="row"
+                                ng-class-odd="'odd'">
+                                <td>{{article.title| limitTo:30}}</td>
+                                <td class="sorting_1">{{article.author.username}}</td>
+                                <td>{{article.governorate}}</td>
+                                <td>{{article.dateCreation| date:'dd/MM/yyyy'}}</td>
+                                <td>{{article.views}}</td>
+                                <td class="text-center" style="padding: 5px">
+                                    <button class="btn btn-sm btn-danger fa fa-trash-o"
+                                            ng-click="deleteArticle(article,$index)"></button>
+                                    <button style="margin-left: 5px" class="btn fa fa-pencil btn-sm btn-warning btn-select"
+                                            ui-sref="admin.articleEdit({article_id:article._id})"></button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div  class=" col-md-8 text-right" style="float: right;">
+                            <ul uib-pagination total-items="totalArticles" ng-model="currentPage" max-size="5"
+                                boundary-link-numbers="true" rotate="false" ui-class="pagination" ng-change="pageChanged()"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

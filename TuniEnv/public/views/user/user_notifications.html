@@ -1,0 +1,17 @@
+<div style="margin-top: 100px" class="row  panel panel-default ">
+
+
+<div  class="col-lg-10 col-md-offset-1 panel-body row">
+    <ul >
+        <li ng-repeat="notif in user.notifications | orderBy: '-date'" style="list-style: none;padding: 10px">
+            {{notif.date | date: "hh:mm , MMM,dd" }} ---- <a style="text-decoration: none;font-size: 18px;color: wheat" ui-sref="show_article({article_id:notif.article_id})">{{notif.message}}</a>
+        </li>
+    </ul>
+
+    <div class="col-md-12" ng-show="favorites.length==0 && !loading">
+        <h1 class="text-center" >You don't have Notifications yet !</h1>
+    </div>
+</div>
+
+
+</div>

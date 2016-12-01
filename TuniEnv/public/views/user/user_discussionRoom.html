@@ -1,0 +1,41 @@
+<div ba-panel="" ba-panel-blur="">
+    <div class="panel-heading">
+        <div class="row">
+            <button type="button" ui-sref="user.Discussions"
+                    class="back-button btn-with-icon col-md-1">
+                <i class="ion-chevron-left"></i>Back
+            </button>
+            <div class=" col-md-10 message-details text-right">{{discussionWith}}</div>
+        </div>
+    </div>
+    <div class="panel-body" id="message">
+            <div class="person-info row ">
+                <div class="line"></div>
+                <div class="message-body">
+                    <div ng-repeat="msg in dicussion" class="messages messages-img">
+                        <div ng-class="msg.from.username==user.username?'item':'item in'">
+                            <div style="cursor: pointer;" ui-sref="user_profile({username:msg.from.username})"
+                                 class="image">
+                                <img ng-src="{{msg.from.avatar || '/public/assets/img/no-photo.png'}}">
+                            </div>
+                            <div ui-sref="user_profile({username:msg.from.username})" class="text">
+                                <div class="heading">
+                                    <a href="#">{{msg.from.username}}</a>
+                                    <span class="date">{{msg.dateCreation | timeago}}</span>
+                                </div>
+                                {{msg.body}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="col-md-10 col-md-offset-1" style="margin-top: 20px">
+            <div class="input-group">
+                        <textarea class="form-control custom-control" rows="3" ng-model="message.body"
+                                  style="resize:none;margin: 0;"></textarea>
+                <span id="scroll" class="input-group-addon btn btn-primary"
+                      ng-click="sendMessage()">Send</span>
+            </div>
+        </div>
+    </div>
+</div>

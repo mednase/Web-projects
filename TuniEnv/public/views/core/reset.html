@@ -1,0 +1,30 @@
+<div class="auth-main">
+    <div class="auth-block animated fadeInDown row">
+        <div><h1>Enter new password</h1></div>
+        <form name="form" role="form" class="form-horizontal" ng-submit="resetProcess()">
+            <div class="form-group">
+                <label for="pass" class="col-sm-3 control-label">Password</label>
+                <div class="col-sm-9">
+                    <input type="password" id="pass" class="form-control" ng-model="password" placeholder="Password" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cpass" class="col-sm-3 control-label">Confirm</label>
+                <div class="col-sm-9">
+                    <input type="password" id="cpass" class="form-control" ng-model="cpassword" placeholder="Confirm Password" required>
+                </div>
+            </div>
+            <div class="text-right">
+            <input type="submit" role="button" class="btn btn-primary" value="Reset">
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+

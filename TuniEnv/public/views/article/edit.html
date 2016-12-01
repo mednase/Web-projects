@@ -1,0 +1,99 @@
+<div class="article-block">
+    <div ba-panel="" ba-panel-blur="">
+        <div style=" padding-top: 40px;">
+            <h1 class="text-center">Edit your article</h1>
+        </div>
+
+        <div class="panel-body"><!-- ngInclude: 'app/pages/form/inputs/widgets/standardFields.html' -->
+            <div>
+                <form role="form" name="form" ng-submit="editArticle()">
+                    <div class="form-group" ng-class="{ 'has-error': form.title.$dirty && form.title.$invalid }">
+                        <label for="title">Article Title</label>
+                        <input type="text" class="form-control input-lg has-feedback" id="title" placeholder="Title"
+                               name="title" ng-model="article.title" ng-minlength="5" ng-required="true"
+                               uib-tooltip="You should chose a title for your article 5 cara at least !"
+                               tooltip-placement="top"
+                               tooltip-trigger="'focus mouseleave'"
+                               tooltip-enable="form.title.$dirty && form.title.$invalid">
+
+                        <span ng-show="form.title.$invalid && form.title.$dirty"
+                              class="ion-ios-information form-control-feedback"></span>
+
+                    </div>
+                    <div class="form-group"
+                         ng-class="{ 'has-error': form.description.$dirty && form.description.$invalid }">
+                        <label style="padding: 10px" for="description">Article s description</label>
+                        <textarea placeholder="Describe your article" class="form-control input-lg has-feedback"
+                                  name="description" id="description" ng-model="article.description"
+                                  rows="8"
+                                  ng-minlength="10" ng-required="true"
+                                  uib-tooltip="You should describe your article 10 cara at least !"
+                                  tooltip-placement="top"
+                                  tooltip-trigger="'focus mouseleave'"
+                                  tooltip-enable="form.description.$dirty && form.description.$invalid">
+                        </textarea>
+                        <span ng-show="form.description.$invalid && form.description.$dirty"
+                              class="ion-ios-information form-control-feedback"></span>
+
+                    </div>
+
+                    <div class="form-group"
+                         ng-class="{ 'has-error': form.governorate.$dirty && form.governorate.$invalid }">
+                        <select class="form-control input-lg has-feedback" ng-model="article.governorate"
+                                name="governorate"
+                                ng-options="g for g  in governorate " tabindex="-98" ng-required="true"
+                                style="color: #1b9681"
+                                uib-tooltip="You should select your governorate !"
+                                tooltip-placement="top"
+                                tooltip-trigger="'focus mouseleave'"
+                                tooltip-enable="form.governorate.$dirty && form.governorate.$invalid">
+                            <option data-hidden="true" disabled="" value="" class="" selected="selected">Select a
+                                Governorate
+                            </option>
+                        </select>
+                        <span ng-show="form.governorate.$invalid && form.governorate.$dirty"
+                              class="ion-ios-information form-control-feedback"></span>
+
+                    </div>
+
+                    <uib-progressbar ng-show="progress.enable" class="progress-striped active" value="progress.value" type="{{progress.type}}"
+                                     on-change="changed(oldV,newV)">
+                    </uib-progressbar>
+
+
+                    <div  id="dropzone" >
+                        <div  class="dropzone" id="my-dropzone" dzValid="dzvalid" dzminfile="2">
+                                <div class="dz-preview dz-image-preview" ng-repeat="image in article.images" >
+                                    <div class="dz-image">
+                                        <img  src="{{image}}" width="120" height="120">
+                                    </div>
+                                        <a class="dz-remove" ng-click="article.images.splice(article.images.indexOf(image),1)">Remove file {{article.images.length>0}}</a>
+                                </div>
+                        </div>
+                    </div>
+
+
+                    <div class="panel panel-blur animated zoomIn" style="margin: 50px;background: rgba(64, 139, 169, 0.5)">
+                        <div class="panel-heading text-center">
+                            <h3 class="panel-title">Select article Position</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                <ng-map on-click="getPosition($event)"  center="{{position}}" zoom="15" map-type-id="MapTypeId.SATELLITE">
+                                    <marker position="{{position}}" title="{{article.title}}" on-dragend="getPosition($event)"
+                                            animation="Animation.BOUNCE" animation="DROP" draggable="true">
+                                    </marker>
+                                </ng-map>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center " style="margin:20px;">
+                        <input ng-disabled="form.$invalid || (!dzvalid && article.images.length<2)" class="btn btn-success btn-lg" type="submit" value="Save Changes"
+                               id="CreateArticle">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

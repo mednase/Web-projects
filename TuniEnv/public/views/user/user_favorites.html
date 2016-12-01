@@ -1,0 +1,31 @@
+<div class="row  panel panel-default " >
+    <div ba-panel="" ba-panel-blur="" class="animated col-lg-10 col-md-offset-1 panel-body row"
+         ng-repeat="article in favorites | filter: search" >
+        <div class="col-md-3"  >
+            <img src="{{article.images[0]}}" class="img-responsive ">
+        </div>
+        <div class="col-md-6" >
+            <div class="post-title " style="cursor: pointer" ng-click="showArticle(article)">{{article.title}}</div><br>
+            <p style="margin-top: 10px">{{article.description | limitTo: 200 }}{{article.description.length > 200 ? '...' : ''}}</p>
+            <div class="article-info">
+                <span style="color: dodgerblue;" class="glyphicon glyphicon-thumbs-up"> {{article.likes.length}}</span>
+                <span style="color:indianred;" class="glyphicon glyphicon-thumbs-down"> {{article.dislikes.length}}</span>
+                <span style="color:rgba(230, 98, 37, 0.96);font:300" class="disqus-comment-count" data-disqus-identifier="{{article._id}}"> </span>
+                <span class="text-right fa fa-eye "> {{article.views}}</span>
+
+            </div>
+        </div>
+        <div class="col-md-2" style="padding: 15px">
+            <button ng-click="removeFavorite(article,$index)" class="btn btn-small btn-danger" style="margin: 5px"><small class="fa fa-trash-o"></small>Remove From Favorites</button>
+        </div>
+    </div>
+    <div class="col-md-12" ng-show="favorites.length==0 && !loading">
+        <h1 class="text-center" >You don't have favorties yet !</h1>
+    </div>
+
+    <div ng-show="loading" class="text-center">
+        <img src="public/assets/img/loader/loading.svg">
+    </div>
+
+</div>
+<script id="dsq-count-scr" src="//tuni-env.disqus.com/count.js" async></script>

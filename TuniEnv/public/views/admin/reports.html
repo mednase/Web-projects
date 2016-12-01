@@ -1,0 +1,57 @@
+<div class="page-title">
+    <h2><span class="fa fa-warning"></span> Reports
+        <small>{{reports.length}} reports</small>
+    </h2>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body panel-body-table">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-actions">
+                        <thead>
+                        <tr>
+                            <th width="200">Article Title</th>
+                            <th width="160">author</th>
+                            <th width="150">Reporters</th>
+                            <th width="300">Reason</th>
+                            <th width="100"> report count</th>
+                            <th width="10">date</th>
+                            <th width="80">actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="report in reports track by $index">
+                            <td style="cursor: pointer;white-space: nowrap;" ui-sref="show_article({article_id:report.article._id})"
+                                class="text-center">{{report.article.title|limitTo:25}}
+                            </td>
+                            <td ui-sref="user_profile({username:report.article.author.username})" style="white-space: nowrap;cursor: pointer;">{{report.article.author.username|limitTo:20}}</td>
+                            <td>
+                                <select class="form-control">
+                                    <option  ng-repeat="reporter in report.users"><strong >{{reporter.username}}</strong>
+                                    </option>
+                                </select>
+                            </td>
+                            <td><span class="text-info">{{report.reason}}</span></td>
+                            <td class="text-center">{{report.users.length}}</td>
+                            <td>{{ report.date|date:'dd/MM/yyyy' }}</td>
+                            <td>
+                                <button class="btn btn-danger btn-rounded btn-sm" ng-click="deleteReport(report)"><span
+                                        class="fa fa-times"></span></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+        <div  class=" col-md-8 text-right" style="float: right;">
+            <ul uib-pagination total-items="totalReports" ng-model="currentPage" max-size="5"
+                boundary-link-numbers="true" rotate="false" ui-class="pagination" ng-change="pageChanged()"></ul>
+        </div>
+
+    </div>
+</div>

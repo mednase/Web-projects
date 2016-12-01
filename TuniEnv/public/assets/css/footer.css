@@ -1,0 +1,17 @@
+.footer{
+    bottom: 0;
+    width: 100%;
+    font-size: 18px;
+    color: #999999;
+    background: radial-gradient(ellipse at 69% 50%, #2c3e50 15%, #243340 70%);
+    padding-bottom: 20px;
+    display: block;
+    box-sizing: border-box;
+    position: relative;
+    height: 150px;
+    clear:both;
+    padding-top:20px;
+}
+.footer a{
+    text-decoration: none;
+}

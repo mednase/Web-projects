@@ -1,0 +1,123 @@
+<div class="row profile-page ">
+    <div ba-panel="" ba-panel-blur="" class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-body profile ">
+                <div class="profile-image">
+                    <img ng-src="{{userInfo.avatar || 'public/assets/img/no-photo.png'}}" alt="{{userInfo.firstname+' '+userInfo.lastname }}">
+                </div>
+                <div class="profile-data">
+                    <div class="profile-data-name">{{userInfo.username}}</div>
+                </div>
+                <div class="profile-controls">
+                    <a href="{{userInfo.twitter}}" ng-show="userInfo.twitter" class="profile-control-left twitter"><span class="fa fa-twitter"></span></a>
+                    <a href="{{userInfo.facebook}}" ng-show="userInfo.facebook" class="profile-control-right facebook"><span class="fa fa-facebook"></span></a>
+                </div>
+            </div>
+            <div class="panel-body" ng-show="currentUser.username!=userInfo.username && authenticated">
+                <div class="row">
+                    <div class="col-md-6" ng-hide="currentUser.following.indexOf(userInfo.username)==-1" >
+                        <button ng-click="Unfollow()" class="btn btn-info btn-rounded btn-block" style="color: #af3a2b;border-color: #af2416;"><span class="fa fa-times"></span> Unfollow</button>
+                    </div>
+                    <div class="col-md-6" ng-show="currentUser.following.indexOf(userInfo.username)==-1">
+                        <button ng-click="Follow()" class="btn btn-info btn-rounded btn-block" style="color: #1caf9a;border-color: #1caf9a;"><span class="fa fa-plus"></span> Follow</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button data-toggle="modal" data-target="#MessageModal" class="btn btn-primary btn-rounded btn-block" style="border-color: greenyellow;
+                        color: chartreuse;"><span class="fa fa-comments"></span> Chat</button>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 10px;" class="user-info">
+                    <div>
+                        <span class="fa fa-user"> Name :</span> {{userInfo.firstname+' '+userInfo.lastname}}
+                    </div>
+                    <div ng-show="userInfo.email">
+                        <span class="fa fa-envelope-o"> Email :</span> {{userInfo.email}}
+                    </div>
+                    <div ng-show="userInfo.phone">
+                        <span class="fa fa-phone"> Phone :</span> {{userInfo.phone}}
+                    </div>
+                    <div>
+                        <span class="fa fa-eye"> Role :</span> {{userInfo.role}}
+                    </div>
+                    <div>
+                        <span class="fa fa-calendar" style="margin-right: 5px"> Date Join </span>:{{userInfo.dateJoin | date: "dd-MMMM-yyyy" }}
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 user-activity" ba-panel="" ba-panel-blur="" >
+        <div class="timeline timeline-right">
+            <!-- START TIMELINE ITEM -->
+            <div class="timeline-item timeline-main">
+                <div class="timeline-date">Today</div>
+            </div>
+            <!-- END TIMELINE ITEM -->
+            <div ng-repeat="article in userInfo.articles | orderBy: '-dateCreation' | limitTo:loadItemNumber">
+
+
+                <div class="timeline-item timeline-main" style="margin: 10px">
+                    <div class="timeline-date">{{article.dateCreation | timeago}}</div>
+                </div>
+
+            <!-- START TIMELINE ITEM -->
+            <div class="timeline-item timeline-item-right" >
+                <div class="timeline-item-info">{{article.dateCreation | date: "hh:mm" }}</div>
+                <div class="timeline-item-icon"><span class="fa fa-pencil"></span></div>
+                <div class="timeline-item-content">
+                    <div class="timeline-heading padding-bottom-0">
+                        <img ng-src="{{ userInfo.avatar || 'public/assets/img/no-photo.png' }}"> <strong>{{userInfo.username}}</strong> posted a new article
+                    </div>
+                    <div class="timeline-body">
+                        <img src="{{article.images[0]}}" width="200" class="img-text" align="left">
+                        <h4 style="cursor:pointer;" ui-sref="show_article({article_id:article._id})">{{article.title | limitTo:20}} <span ng-show="article.title.length>20">....</span></h4>
+                        <p>{{article.description}}</p>
+                    </div>
+                    <div class="timeline-footer">
+                        <a  ui-sref="show_article({article_id:article._id})">Details</a>
+                        <div class="pull-right">
+                            <span class="fa fa-thumbs-o-up"></span>{{article.likes.length}} &nbsp;
+                            <span class="fa fa-thumbs-o-down"></span>{{article.dislikes.length}}&nbsp;
+                            <span class="fa fa-eye"></span> {{article.views}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END TIMELINE ITEM -->
+
+            </div>
+
+
+            <!-- START TIMELINE ITEM -->
+            <div style="cursor: pointer" class="timeline-item timeline-main" ng-click="loadMore()">
+                <div class="timeline-date"><span class="fa fa-ellipsis-h"></span></div>
+            </div>
+            <!-- END TIMELINE ITEM -->
+        </div>
+    </div>
+
+</div>
+<!-- Modal -->
+<div id="MessageModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-content">
+        <div class="modal-header modal-header-sendM">
+            <button type="button" class="close" style="font-size: 29px;" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title " id="modal-title"><span class="fa fa-comment"></span>
+                Send Message to {{ userInfo.username }}</h3>
+
+        </div>
+        <div class=" form-group  modal-body" ng-class="MessageForm.message.$invalid ?'has-error' :'' "
+             ng-form name="MessageForm">
+        <textarea ng-maxlength="300" class="form-control has-feedback" rows="8" name="message"
+                  ng-model="message.body" style="resize: vertical;">
+
+        </textarea>
+            <small class="text-right info-message-size">{{ message.body.length}}/300</small>
+        </div>
+        <div class="modal-footer" style="background-color: whitesmoke;margin-top: 20px">
+            <button class="btn btn-danger text-left" type="button" data-dismiss="modal">Cancel</button>
+            <button  class="btn btn-primary" type="button" ng-click="sendMessage(userInfo.username)" data-dismiss="modal">Send Message</button>
+        </div>
+    </div>
+</div>

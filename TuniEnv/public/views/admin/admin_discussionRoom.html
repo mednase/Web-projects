@@ -1,0 +1,43 @@
+<div class="content-frame">
+    <!-- START CONTENT FRAME TOP -->
+    <div class="content-frame-top">
+        <div class="page-title">
+            <h2><span class="fa fa-comments"></span>{{discussionWith}} messages</h2>
+        </div>
+    </div>
+    <!-- END CONTENT FRAME TOP -->
+
+
+    <!-- START CONTENT FRAME BODY -->
+    <div class="content-frame-body" style="margin-right: 10%;margin-left: 2%;margin-top: 10 px">
+
+        <div ng-repeat="msg in dicussion" class="messages messages-img" >
+            <div ng-class="msg.from.username==user.username?'item':'item in'">
+                <div class="image">
+                    <img ng-src="{{msg.from.avatar || '/public/assets/img/no-photo.png'}}" >
+                </div>
+                <div class="text">
+                    <div class="heading">
+                        <a href="#">{{msg.from.username}}</a>
+                        <span class="date">{{msg.dateCreation | timeago}}</span>
+                    </div>
+                    {{msg.body}}
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default push-up-10">
+            <div class="panel-body panel-body-search">
+                <div class="input-group messaging">
+                        <i class="input-group-addon"><span class="fa fa-pencil"></span></i>
+                    <input id="scroll" ng-model="message.body" type="text" class="form-control" placeholder="Your message..."/>
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" ng-click="sendMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- END CONTENT FRAME BODY -->
+</div>

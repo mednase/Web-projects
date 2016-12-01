@@ -1,0 +1,70 @@
+<div ba-panel="" ba-panel-blur="">
+    <div class="panel-heading">
+        <div class="messages-control" style="padding-left: 15px">
+            <label id="btnSelect" class="checkbox-inline custom-checkbox nowrap">
+                <input type="checkbox" id="inlineCheckbox01" ng-click="selectAll()"
+                       ng-checked="isAllSelected()"
+                >
+                <span
+                        class="select-all-label">Select All
+                </span>
+            </label>
+            <input type="text" class="messages-control-form" ng-model="search">
+
+
+            <button ng-click="getDiscussions()" type="button" class="btn btn-transparent refresh-button text-right">
+                <i class="ion-refresh"></i>Refresh
+            </button>
+            <button ng-class="selection.length<1?'disabled':''" ng-click="delete()" type="button"
+                    class="btn btn-transparent text-right">
+                <i class="ion-trash-b"> </i>delete
+            </button>
+        </div>
+    </div>
+
+
+    <div class="messages" ng-hide="loading">
+        <table>
+            <tbody>
+            <tr  ng-repeat="d in discussions  | filter: search | orderBy:'-date'   "
+                class="side-message-navigation-item little-human shineHover family col-md-12">
+                <td class="check-td">
+                    <div class="mail-checkbox">
+                        <label class="checkbox-inline custom-checkbox nowrap">
+                            <input style="z-index: 200" type="checkbox"
+                                   ng-checked="selection.indexOf(d._id) > -1"
+                                   ng-click="toggle(d._id)"
+                            > <span></span>
+                        </label>
+                    </div>
+                </td>
+                <td class="photo-td" ui-sref="user.discussion_room({channel:d._id})">
+                    <img ng-src="{{d.users[0].avatar || 'public/assets/img/no-photo.png' }}"
+                         class="little-human-picture">
+                </td>
+                <td ui-sref="user.discussion_room({channel:d._id})" class="col-md-2">
+                    <div class="name-container">
+                        <div class="person-info" ng-if="d.messages[0].from.username!=user.username" ><span class="name">{{d.messages[0].from.username}} :</span></div>
+                        <div class="person-info" ng-if="d.messages[0].from.username==user.username"><span class="name">You :</span></div>
+
+                    </div>
+                </td>
+                <td class="col-md-8" ui-sref="user.discussion_room({channel:d._id})">
+                    <div class="mail-body-part ">
+                        {{d.messages[0].body | limitTo: 40 }}
+                    </div>
+                </td>
+                <td ui-sref="user.discussion_room({channel:d._id})" class="text-right">{{d.messages[0].dateCreation | date:"MMM,d @ HH:mm"}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div ng-show="loading" class="text-center">
+        <img src="public/assets/img/loader/loading.svg">
+    </div>
+    <div ng-show="messages.length<1 && !loading" class="text-center">
+        <h1>You don't have any message !</h1>
+    </div>
+</div>

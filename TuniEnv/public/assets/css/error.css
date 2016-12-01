@@ -1,0 +1,104 @@
+
+.error-block{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 32px;
+}
+
+.error-container {
+    z-index: 3;
+    width: 540px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 150px;
+
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    padding: 32px;
+}
+
+.error-container .error-code {
+    float: left;
+    width: 100%;
+    font-size: 135px;
+    line-height: 130px;
+    text-align: center;
+    color: #c1bcbc;
+    font-weight: 300;
+}
+.error-container .error-text {
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 26px;
+    line-height: 24px;
+    text-transform: uppercase;
+    color: #caaaaa;
+    text-align: center;
+    font-weight: 400;
+}
+.error-container .error-subtext {
+    float: left;
+    width: 100%;
+    margin: 30px 20px 10px;
+    font-size: 13px;
+    line-height: 20px;
+    color: #cdcdcd;
+    text-align: center;
+    font-weight: 400;
+}
+.error-container .error-actions {
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+.error-container .form-control{
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+.input-group-addon, .input-group-btn {
+    vertical-align: center;
+}
+.btn .fa, .btn .glyphicon {
+    z-index: 4;
+    font-size: 14px;
+    margin-right: 5px;
+}
+.error-container .btn.btn-search{
+    background-color: #b5b9b9;
+    color: #fff9f9;
+}
+
+.error-container .btn-block{
+    font-size: 14px;
+    padding: 8px 20px;
+    line-height: 20px;
+    font-weight: 400;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    -webkit-transition: all 200ms ease;
+    -moz-transition: all 200ms ease;
+    -ms-transition: all 200ms ease;
+    -o-transition: all 200ms ease;
+    transition: all 200ms ease;
+}
+.error-container .btn-info {
+    background-color: #1caf9a;
+    border-color: #1caf9a;
+}
+.error-container .btn-info:hover {
+    background-color: #1b9681;
+    border-color: #1b9681;
+}

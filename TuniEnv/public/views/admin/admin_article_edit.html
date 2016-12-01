@@ -1,0 +1,116 @@
+<div class="page-title">
+    <h2><span class="fa fa-file-text"></span> Articles
+        <small>{{postedArticle}} articles</small>
+    </h2>
+</div>
+
+<div  class="panel panel-default" style="position:relative;padding-bottom: 50px">
+    <div class="panel-heading">
+        <div class="pull-left push-up-10">
+            <button class="btn btn-primary"
+                    id="gallery-toggle-items">Toggle All
+            </button>
+        </div>
+        <div class="pull-right push-up-10">
+            <button ng-click="reset()" class="btn btn-primary"><span class="ion ion-ios-reload"></span> Reset
+            </button>
+                <button id="deleteImages" class="btn btn-primary"><span class="fa fa-trash-o"></span> Delete
+                </button>
+        </div>
+
+    </div>
+    <div class="panel-body " style="padding: 40px;margin-bottom: 50px">
+        <div class="gallery" id="links">
+            <gitem images="article.images" ng-repeat='image in article.images' image="{{image}}" imgtitle="{{article.title}}">
+            </gitem>
+        </div>
+
+        <div id="formContrainer">
+            <form name="form" role="form" class="form-horizontal">
+                <div>
+                    <div class="form-group col-md-12"
+                         ng-class="{ 'has-error': form.title.$dirty && form.title.$invalid }">
+                        <label for="title" class="col-md-2 control-label">Title</label>
+                        <div class="col-md-8">
+                            <input id="title" type="text" class="form-control has-feedback" name="title"
+                                   ng-minlength="4"
+                                   ng-required="true" ng-model="article.title">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12"
+                         ng-class="{ 'has-error': form.description.$dirty && form.description.$invalid }">
+                        <label for="description" class="control-label col-md-2">
+                            Description</label>
+                        <div class="col-md-8">
+                                        <textarea id="description" ng-model="article.description"
+                                                  name="description" class="form-control input-lg"
+                                                  rows="8"
+                                                  ng-minlength="10" ng-required="true" style="resize: vertical"
+                                        ></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12 "
+                         ng-class="{ 'has-error': form.description.$dirty && form.description.$invalid }">
+                        <label for="governorate" class="col-md-2 control-label">Governorate</label>
+                        <div class="col-md-8">
+                            <uis id="governorate" ng-model="article.governorate" choices="governorate">
+                            </uis>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12"
+                         ng-class="{ 'has-error': form.reason.$dirty && form.reason.$invalid }">
+                        <label for="reason" class="control-label col-md-2">
+                            Reason</label>
+                        <div class="col-md-8">
+                                        <textarea id="reason" ng-model="article.reason"
+                                                  name="reason" class="form-control input-lg shadowed"
+                                                  rows="3"
+                                                  style="resize: vertical"
+                                                  ng-minlength="10" ng-required="true"
+                                        ></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+
+        <div class="text-center">
+            <button  ng-class="form.$invalid?'disabled':''" class="btn btn-success mb-control " ng-click="updateArticle()"><i class="fa fa-floppy-o"></i> Save
+                Changes
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- BLUEIMP GALLERY -->
+<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+    <div class="slides"></div>
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+</div>
+<!-- END BLUEIMP GALLERY -->
+<script>
+    $(document).ready(function(){
+                document.getElementById('links').onclick = function (event) {
+                    $("body").css("overflow","inherit");
+                    event = event || window.event;
+                    var target = event.target || event.srcElement;
+                    var link = target.src ? target.parentNode : target;
+                    var options = {index: link, event: event,onclosed: function(){
+                        $("body").css("overflow","inherit");
+                    }};
+                    var links = this.getElementsByTagName('a');
+                    blueimp.Gallery(links, options);
+                    $("body").css("overflow","inherit");
+                };
+    });
+</script>
+<script src="/public/assets/admin/bootsrapSelect/bootstrap-select.js"></script>

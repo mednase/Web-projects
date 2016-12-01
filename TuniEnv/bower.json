@@ -1,0 +1,21 @@
+{
+  "name": "TuniEnv",
+  "description": "",
+  "main": "public/assets/lib",
+  "authors": [
+    "Mednaceur"
+  ],
+  "license": "MIT",
+  "homepage": "public/views/index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/assets/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-gettext": "^2.3.8"
+  }
+}

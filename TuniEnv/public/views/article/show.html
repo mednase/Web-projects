@@ -1,0 +1,154 @@
+
+
+<div class="article-block row"  id="pp">
+    <div ba-panel="" ba-panel-blur=""  ng-class="user.username==article.author.username?'col-md-12':'col-md-9'">
+        <div class="panel-body row">
+            <!-- ngInclude: 'app/pages/form/inputs/widgets/standardFields.html' -->
+            <div class="col-md-12">
+                <div class="text-left col-md-6">
+                    Published at : {{article.dateCreation| date:'MM/dd/yyyy @ h:mma' }}
+                    <span style="color:#5a92ff;font-size: 20px" class="ion ion-ios-timer-outline"></span>
+                </div>
+                <div class="text-right col-md-6">
+                    In {{ article.governorate }}
+                    <span style="color:#b13e3c;font-size: 20px" class="ion ion-location"></span>
+                </div>
+            </div>
+            <div class="text-center article-title">
+                {{article.title}}
+            </div>
+            <div class="col-md-12" uib-carousel active="active" interval="4000" no-wrap="false">
+                <div uib-slide ng-repeat="image in article.images  track by $index " index="$index">
+                    <img ng-src="{{image}}" style="margin:auto;" width="800" height="400">
+                </div>
+            </div>
+
+            <div class="col-md-12 article-description">
+                <h2> Descripion :</h2>
+                <div class="body">
+                    {{article.description}}
+                </div>
+            </div>
+
+
+            <div class="col-md-10 col-md-offset-1" style="background: rgba(64, 139, 169, 0.5)">
+                <div class="panel-body">
+                    <div>
+                        <ng-map center="{{position}}" zoom="15" map-type-id="MapTypeId.SATELLITE">
+                            <marker position="{{position}}" title="{{article.title}}"
+                                    animation="Animation.BOUNCE" animation="DROP">
+                            </marker>
+                        </ng-map>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div ba-panel="" ba-panel-blur="" class="col-md-3" ng-hide="user.username==article.author.username">
+        <small class="text-left">Posted by :</small>
+        <div class="text-center">
+            <a  ui-sref="user_profile({username:article.author.username})" class="profile-control left"><span class="fa fa-info"></span></a>
+            <img ng-src="{{article.author.avatar || 'public/assets/img/no-photo.png' }}" class="img img-circle"
+                 width="100" height="100">
+            <p>{{article.author.username}}</p>
+            <a data-toggle="modal" data-target="#MessageModal" href="#" class="profile-control right"><span class="fa fa-envelope"></span></a>
+        </div>
+        <div class="text-center" style="margin-top: 5px">
+
+            <h3>Like this article ?</h3>
+            <div>
+                <button ng-click="thumbs(true)" ng-disable="likeDisable" class="btn btn-primary btnThumb btnLike"
+                        style="">
+                    <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                    <span class="lb-count">{{article.likes.length}}</span>
+                </button>
+                <button ng-disable="dislikeDisable" class="btn btn-danger btnThumb btnDislike"
+                        ng-click="thumbs(false)"><span class="glyphicon glyphicon-thumbs-down"></span>
+                    <span class="lb-count">{{article.dislikes.length}}</span></button>
+            </div>
+            <div class="text-center">
+                Or
+            </div>
+            <div>
+                <button ng-click="reportArticle()" class="btn-rounded btn-block btn-warning btn-report" style="color: orange;margin-top: 10px;">
+                    <span class="fa fa-warning text-left">
+                    </span> Report </button>
+            </div>
+            <!-- button add Favorite -->
+            <div class='wrapper_content' ng-show="authenticated"  ng-click="toggleCheck()">
+                <div class='wrapper_content__inner'>
+                    <input type='checkbox' ng-checked="checked">
+                    <label>
+                        <div class='favourite'>
+                            <div class='spinner'>
+                                <div class='spinner_part' ng-repeat="i in range(200) track by $index"></div>
+                            </div>
+                            <div class='favourite_heart'>
+                                <div class='favourite_heart__left'></div>
+                                <div class='favourite_heart__right'></div>
+                            </div>
+                            <div class='favourite_text'>
+                                <span>Favourite this</span>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="background-color: whitesmoke;border-radius: 5px" ng-class="user.username==article.author.username?'col-md-12':'col-md-9'">
+        <div id="disqus_thread"></div>
+    </div>
+</div>
+<button id="clk" class="hidden" ng-click="notifyOwner('comment')"></button>
+<script>
+
+    /* Get Article Id From Url */
+
+    var id = window.location.href.split("/").pop();
+    var disqus_config = function () {
+        this.page.identifier = id;
+        this.page.url = window.location.href;
+        this.language = "en";
+        this.callbacks.onNewComment = [function (comment) {
+            var clk=$("#clk");
+            clk.click();
+        }];
+
+
+    };
+
+
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//tuni-env.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<!-- Modal -->
+<div id="MessageModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-content">
+        <div class="modal-header modal-header-sendM">
+            <button type="button" class="close" style="font-size: 29px;" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title " id="modal-title"><span class="fa fa-comment"></span>
+                Send Message to {{ article.author.username }}</h3>
+
+        </div>
+        <div ng-form name="MessageForm" class=" form-group  modal-body" ng-class="MessageForm.message.$invalid ?'has-error' :'' ">
+        <textarea ng-maxlength="300" class="form-control has-feedback" rows="8" name="message"
+                  ng-model="message.body" style="resize: vertical;">
+
+        </textarea>
+            <small class="text-right info-message-size">{{ message.body.length || 0 }}/300</small>
+        </div>
+        <div class="modal-footer" style="background-color: whitesmoke;margin-top: 20px">
+            <button class="btn btn-danger text-left" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="sendMessage(article.author.username)" data-dismiss="modal">Send Message</button>
+        </div>
+    </div>
+</div>

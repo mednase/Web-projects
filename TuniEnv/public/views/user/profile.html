@@ -1,0 +1,188 @@
+<div class="content-top"><h1 class="al-title ng-binding">Profile</h1>
+    <ul class="breadcrumb al-breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="ng-binding">Profile</li>
+    </ul>
+</div>
+
+<div class="row profile-page">
+    <div ba-panel class="col-md-10 col-md-offset-1">
+        <div class="panel-body">
+            <div class="panel-content">
+            </div>
+            <h3 class="with-line">General Information</h3>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group row "><label for="inputFirstName"
+                                                        class="col-sm-3 control-label">Avatar</label>
+                        <div class="col-sm-9">
+                            <form name="form" role="form">
+                                <div class="userpic">
+                                    <div class="userpic-wrapper">
+                                        <img id="avatar"
+                                             ngf-thumbnail=" file  || user.avatar || 'public/assets/img/no-photo.png'">
+                                    </div>
+
+                                    <i class="ion-ios-close-outline ng-scope" ng-click="removePicture()"
+                                       ng-if="user.avatar"></i>
+
+                                    <div ngf-select="uploadProfileImage($file)" class="change-userpic button"
+                                         ng-model="file" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'"
+                                         ngf-max-size="1MB" ngf-resize="{width: 250, height: 250}" ngf-min-height="100">Change Profile Picture
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" style="position: relative;top: 50px">
+                    <div class="form-group row" >
+                        <label for="username" class="col-md-4 control-label">Username</label>
+                        <div class="col-md-8">
+                            <input ng-model="userPrototype.username" type="text" class="form-control" id="username"
+                                   placeholder="Username" ng-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group  row ">
+                        <label for="inputFirstName" class="col-md-4 control-label">FirstName</label>
+                        <div class="col-md-8">
+                            <input ng-model="userPrototype.firstname" type="text" class="form-control"
+                                   id="inputFirstName"
+                                   placeholder="FirstName">
+                        </div>
+                    </div>
+                    <div class="form-group row ">
+                        <label for="inputLastName" class="col-md-4 control-label">LastName</label>
+                        <div class="col-md-8">
+                            <input ng-model="userPrototype.lastname" type="text" class="form-control" id="inputLastName"
+                                   placeholder="LastName"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <h3 class="with-line">Change Password</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row ">
+                            <label for="inputPassword" class="col-sm-3 control-label">Password</label>
+                            <div class="col-sm-8">
+                                <input ng-model="psw.password" type="password" class="form-control" id="inputPassword"
+                                       placeholder="" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row ">
+                            <label for="inputConfirmPassword" class="col-sm-4 control-label">Confirm Password</label>
+                            <div class="col-sm-8">
+                                <input type="password" ng-model="psw.confirm" class="form-control"
+                                       id="inputConfirmPassword"
+                                       placeholder="Confirm Password"></div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="with-line">Contact Information</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row ">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control" id="inputEmail3"
+                                       ng-model="userPrototype.email" placeholder="email">
+                            </div>
+                        </div>
+                        <div class="form-group row ">
+                            <label for="inputPhone" class="col-sm-3 control-label">Phone</label>
+                            <div class="col-sm-9">
+                                <input type="tel" name="phone" class="form-control has-feedback"
+                                       ng-model="userPrototype.phone"
+                                       ng-pattern="phoneRegex" mask="phone" id="inputPhone" placeholder="Phone number">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="with-line">Social Profiles</h3>
+                <div class="social-profiles row ">
+                    <div class="col-md-6 col-sm-6">
+                        <a class="sn-link connected" target="_blank">
+                            <i class="socicon socicon-facebook"></i>
+                            <input type="text" class="Social-form" ng-model="userPrototype.facebook">
+                            <em class="ion-ios-close-empty sn-link-close"
+                                ng-show="userPrototype.facebook!=user.facebook"
+                                ng-click="userPrototype.facebook=user.facebook"></em>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <a class="sn-link connected " target="_blank">
+                            <i class="socicon socicon-twitter"></i>
+                            <input type="text" class="Social-form" ng-model="userPrototype.twitter">
+                            <em class="ion-ios-close-empty sn-link-close" ng-show="userPrototype.twitter!=user.twitter"
+                                ng-click="userPrototype.twitter=user.twitter"></em>
+                        </a>
+                    </div>
+
+                </div>
+                <h3 id="settings" class="with-line">Settings</h3>
+                <div class="notification row">
+                    <div class="form-group col-md-6 row">
+                        <label class="col-sm-8">Activate notification</label>
+                        <div class="onoffswitch col-sm-4">
+                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
+                                   checked>
+                            <label class="onoffswitch-label" for="myonoffswitch">
+                                <span class="onoffswitch-inner"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 row">
+                        <label class="col-sm-8">Show My E-mail</label>
+                        <div class="onoffswitch col-sm-4">
+                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch1"
+                                   checked>
+                            <label class="onoffswitch-label" for="myonoffswitch1">
+                                <span class="onoffswitch-inner"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-warning btn-with-icon save-profile" data-toggle="modal"
+                            data-target="#ProfileModal">
+                        <i class="fa fa-lock"></i>Update Password
+                    </button>
+                    <button ng-click="updateProfile()" type="button" class="btn btn-primary btn-with-icon save-profile">
+                        <i class="glyphicon glyphicon-check"></i>Update Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Modal Confirm update -->
+
+<div class="modal" id="ProfileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog open">
+        <div class="modal-content" style="margin-top: 20%">
+            <div class="modal-header">
+                <h4 class="text-left modal-title " id="myModalLabel">Update Profile</h4>
+            </div>
+            <form name="ConfirmForm" role="form">
+                <div class="modal-body">
+                    <p>Pleaser enter your old password for security</p>
+                    <div class="form-group">
+                        <input name="confirmUpdate" ng-minlength="6" type="password" class="form-control"
+                               placeholder="Password" ng-model="psw.confirmUpdate" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger text-left" data-dismiss="modal" aria-label="Close">
+                        Cancel
+                    </button>
+                    <button ng-disabled="ConfirmForm.$invalid" data-dismiss="modal" type="button"
+                            class="btn btn-primary" ng-click="updatePassword()">Confirm
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

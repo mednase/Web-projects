@@ -1,0 +1,281 @@
+<div>
+    <nav class="navbar navbar-default navbar-fixed-top" id="topnav">
+        <div class="container-fluid row">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="col-md-12">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand S-title" style="" href="/">
+                        <translate>TuniEnv</translate>
+                    </a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse  " id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li ng-class="location=='home'?'active':''"><a  ui-sref="home">Latest<span class="sr-only">(current)</span></a></li>
+                        <li ng-class="location=='popular'?'active':''"><a ui-sref="popular">Popular<span class="sr-only">(current)</span></a></li>
+                        <li ng-class="location=='governorate'?'active':''" class="dropdown hidden-sm">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                <translate>Governorate</translate>
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu row" style="width: 700px;padding: 20px">
+                                <li>
+                                    <div style="text-decoration: none;outline: none;">
+                                        <a href="#" ui-sref="governorate({name:gov})" class="col-md-3 governorate"
+                                           ng-repeat="gov in governorate">
+                                            <translate>{{gov}}</translate>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="col-sm-3 col-md-3">
+                        <form class="navbar-form searchbox" role="search">
+                            <div class="input-group inner-addon left-addon right-addon">
+                                <i class="glyphicon glyphicon-search"></i>
+                                <input autocomplete="off" ng-blur="resetSearch()" type="text" class="searchbox" ng-model="searchNav.text"
+                                       placeholder="{{'Search for an article ?'|translate}}" name="q"
+                                        ui-items="suggestion" ng-focus="searchResult.text.length>0">
+                                <i id="removeIcon" style="cursor: pointer" ng-click="resetSearch()"
+                                   class="ion-android-close " ng-show="searchNav.text.length>0"></i>
+                                <div ng-show="searchNav.text.length>0" class="searchDiv ">
+                                    <a  class="col-md-12 col-sm-12 text-block" ng-animate="'animate'" ng-repeat="result in searchResult"
+                                       ui-sref="show_article({article_id:result._id})" ng-click="resetSearch()">
+                                        <span class="col-md-9" > {{result.title |limitTo:30}}  </span><i style="color: indianred;"
+                                                                                           class="ion-ios-location hidden-sm">
+                                        {{result.governorate}} </i>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <ul ng-hide="authenticated" class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/login" style="font-size: larger">
+                                <translate>Login</translate>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/register" style="font-size: larger">
+                                <translate>Sign up</translate>
+                            </a>
+                        </li>
+
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle form-control select-language icon-lang icon-tn"
+                               data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false"></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#" class="col-sm-12">
+                                    <i class="form-control select-language icon-lang icon-tn col-sm-4 "
+                                       style="margin-right:10px"></i>
+                                    <translate>arabe</translate>
+                                </a>
+                                </li>
+                                <li><a href="#" class="col-sm-12">
+                                    <i class="form-control select-language icon-lang icon-fr col-sm-4 "
+                                       style="margin-right:10px"></i>
+                                    <translate>français</translate>
+                                </a>
+                                </li>
+                                <li><a href="#" class="col-sm-12">
+                                    <i class="form-control select-language icon-lang icon-en col-sm-4"
+                                       style="margin-right:10px"></i>
+                                    <translate>english</translate>
+                                </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="toolbar-icon-bg hidden-sm" onclick="fullScreen()" style="margin-right: 5px">
+                            <a href="#"><span class="icon-bg"><i
+                                    class="fa fa-arrows-alt"
+                                    tooltip-placement="bottom" uib-tooltip="Full screen"></i></span></a>
+                        </li>
+                    </ul>
+                    <ul ng-show="authenticated" class="nav navbar-nav navbar-right ">
+                        <li style="font-size: 15px" ng-hide="user.role=='user'">
+                            <a style="color: #e6b51a" ui-sref="admin.dashboard"><span class="xn-text">Dashboard</span></a>
+                        </li>                        <li class="dropdown notification"><!-- Dropdown -->
+                            <a href="#" ng-click="setMessageSeen()" class="dropdown-toggle" data-toggle="dropdown"
+                               role="button"
+                               aria-expanded="false">
+                                <i style="font-size: 18px;" class="fa fa-envelope-o"></i>
+                                <span ng-show="new_messages>0" class="green">{{new_messages}}</span>
+                                <div ng-show="new_messages>0" class="notification-ring green"></div>
+                            </a>
+                            <div uib-dropdown-menu="" class="top-dropdown-menu dropdown-menu "
+                                 style="background-color: aliceblue;border-top-left-radius: 5px;border-top-right-radius: 5px;"
+                                 ng-style="new_messages>0?{marginRight:23,marginTop:10}:{marginRight:0,marginTop:-2}">
+                                <i class="dropdown-arr hidden-xs"></i>
+                                <div class="header">
+                                    <span class="fa fa-comments"></span>
+                                    Messages
+
+                                    <div class="pull-right">
+                                        <span class="label label-info">{{new_messages}} new</span>
+                                    </div>
+
+                                </div>
+                                <div class="msg-list">
+                                    <a href="" ng-repeat="discussion in user.discussions | orderBy: '-dateCreation' | limitTo: 10"
+                                       ng-class="discussion.messages.last().seen?'':'unseen'"
+                                       ui-sref="user.discussion_room({channel:discussion._id})">
+                                        <div class="img-area">
+                                            <img class="photo-msg-item"
+                                                 ng-src="{{discussion.users.last().avatar || '/public/assets/img/no-photo.png'}}">
+                                        </div>
+                                        <div class="msg-area">
+                                            <div>
+                                                <strong ng-if="discussion.messages.last().from.username==user.username">You :</strong>
+                                                <strong ng-if="discussion.messages.last().from.username!=user.username">{{discussion.messages.last().from.username}} :</strong>
+
+                                                {{discussion.messages.last().body |limitTo:20}}<i ng-show="discussion.messages.last().length>20">.....</i>
+                                            </div>
+                                            <span>{{discussion.messages.last().dateCreation | timeago}}</span>
+                                        </div>
+                                    </a>
+                                    <div class="text-center " style="padding: 10px;font-size: 18px" ng-show="user.discussions.length<1">
+                                        You have no messages
+                                    </div>
+                                </div>
+                                <a ui-sref="user.Discussions">See all messages</a>
+                            </div>
+                        </li>
+                        <li class="dropdown notification">
+                            <a href="#" ng-click="setNotificationSeen()" class="dropdown-toggle" data-toggle="dropdown"
+                               role="button"
+                               aria-expanded="false">
+                                <i style="font-size: 18px;" class="fa fa-bell-o"></i>
+                                <span ng-show="new_notifications>0" class="red">{{new_notifications}}</span>
+                                <div ng-show="new_notifications>0" class="notification-ring red"></div>
+                            </a>
+                            <div uib-dropdown-menu="" class="top-dropdown-menu dropdown-menu"
+                                 style="background-color: aliceblue;border-top-left-radius: 5px;border-top-right-radius: 5px;"
+                                 ng-style="new_notifications>0?{marginRight:23,marginTop:10}:{marginRight:0,marginTop:-2}">
+                                <i class="dropdown-arr hidden-xs"></i>
+                                <div class="header">
+                                    <span class="fa fa-bell"></span>
+                                    Notifications
+                                    <div class="pull-right">
+                                        <span class="label label-info">{{new_notifications}} new</span>
+                                    </div>
+
+                                </div>
+                                <div class="msg-list">
+                                    <a href="" ui-sref="show_article({article_id: notif.article_id})"
+                                       ng-repeat="notif in user.notifications | orderBy: '-date' | limitTo: 10"
+                                       ng-class="notif.seen?'':'unseen'">
+                                        <div class="img-area">
+                                            <img class="photo-msg-item"
+                                                 ng-src="{{notif.from[0].avatar || '/public/assets/img/no-photo.png'}}">
+                                        </div>
+                                        <div class="msg-area">
+                                            <div>
+                                                {{notif.message |limitTo:50}}<i
+                                                    ng-show="notif.message.length>50">.....</i>
+                                            </div>
+                                            <span>{{notif.date | timeago}}</span>
+                                        </div>
+                                    </a>
+                                    <div class="text-center " style="padding: 10px;font-size: 18px" ng-show="user.notifications.length<1">
+                                        You have no notification
+                                    </div>
+                                </div>
+                                <a ui-sref="user.user_notifications">See all notifications</a>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div><!-- /.navbar-collapse -->
+            </div>
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <ul ng-show="authenticated" class="side-navigation ">
+
+        <li class="nav-row xn-profile">
+            <a href="/user/profile" class="profile-mini">
+                <img ngf-thumbnail="user.avatar || 'public/assets/img/no-photo.png'">
+                <span style="margin-left: 15px"> Profile {{user.username}}</span>
+            </a>
+        </li>
+
+        <li class="nav-row" ng-hide="user.role=='user'">
+            <a style="color: lightskyblue" href="/admin/dashboard"><span class="fa fa-tachometer "></span> <span class="xn-text">Dashboard</span></a>
+        </li>
+
+        <li class="nav-row">
+            <a href="/"><span class="fa fa-home"></span> <span>Home</span></a>
+        </li>
+        <li class="nav-row">
+            <a ui-sref="user.Discussions"><span class="fa fa-envelope"></span> <span>Messages</span></a>
+        </li>
+        <li class="nav-row">
+            <a href="/user/articles"><span class="fa fa fa-files-o"></span> <span>My articles</span></a>
+        </li>
+        <li class="nav-row">
+            <a href="/article/new"><span class="fa fa-pencil"></span> <span>New article</span></a>
+        </li>
+        <li class="nav-row">
+            <a href="/user/favorites"><span class="fa fa-heart"></span> <span>My Favorites</span></a>
+        </li>
+        <li class="nav-row">
+            <a href="/user/notifications"><span class="ion ion-earth"></span> <span>Notifications</span></a>
+        </li>
+        <li class="nav-row">
+            <a ui-sref="user.profile({'#': 'settings'})"><span class="fa fa-cog"></span> <span>Settings</span></a>
+        </li>
+
+        <li class="nav-row">
+            <a href="/logout"><span class="fa fa-lock"></span> <span>Logout</span></a>
+        </li>
+
+    </ul>
+</div>
+<script language="JavaScript">
+    function fullScreen() {
+
+        /* Exist Full Screen */
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+
+        /* Enter Full Screen */
+        var el = document.documentElement
+                , rfs = // for newer Webkit and Firefox
+                        el.requestFullScreen
+                        || el.webkitRequestFullScreen
+                        || el.mozRequestFullScreen
+                        || el.msRequestFullScreen
+                ;
+        if (typeof rfs != "undefined" && rfs) {
+            rfs.call(el);
+        } else if (typeof window.ActiveXObject != "undefined") {
+            // for Internet Explorer
+            var wscript = new ActiveXObject("WScript.Shell");
+            if (wscript != null) {
+                wscript.SendKeys("{F11}");
+            }
+        }
+
+
+    }
+</script>
